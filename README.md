@@ -1,11 +1,9 @@
 # Globex
 
-**TODO: Add description**
+A global variable library for Elixir that provides a simple way to manage global state in your applications.
+
 
 ## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `globex` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -15,7 +13,10 @@ def deps do
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/globex>.
+## Usage
 
+[Documentation available on HexDocs](https://hexdocs.pm/globex)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

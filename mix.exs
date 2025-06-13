@@ -6,8 +6,13 @@ defmodule Globex.MixProject do
       app: :globex,
       version: "0.1.0",
       elixir: "~> 1.18",
+      build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      description: description(),
+      package: package(),
+      deps: deps(),
+      name: "Globex",
+      source_url: "https://github.com/sfera-lab/globex"
     ]
   end
 
@@ -22,8 +27,21 @@ defmodule Globex.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+      {:ex_doc, "~> 0.14", only: :dev, runtime: false}
+    ]
+  end
+
+  defp description do
+    "Global variable library for Elixir."
+  end
+
+  defp package do
+    [
+      name: "globex",
+      files: ~w(lib priv .formatter.exs mix.exs README* readme* LICENSE*
+                license* CHANGELOG* changelog* src),
+      licenses: ["Apache-2.0"],
+      links: %{"GitHub" => "https://github.com/sfera-lab/globex"}
     ]
   end
 end

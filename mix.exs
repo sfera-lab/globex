@@ -4,7 +4,7 @@ defmodule Globex.MixProject do
   def project do
     [
       app: :globex,
-      version: "0.1.0",
+      version: "0.0.1",
       elixir: "~> 1.18",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
@@ -38,9 +38,8 @@ defmodule Globex.MixProject do
   defp package do
     [
       name: "globex",
-      files: ~w(lib priv .formatter.exs mix.exs README* readme* LICENSE*
-                license* CHANGELOG* changelog* src),
-      licenses: ["Apache-2.0"],
+      files: ~w(lib .formatter.exs mix.exs README* LICENSE* CHANGELOG*),
+      licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/sfera-lab/globex"}
     ]
   end

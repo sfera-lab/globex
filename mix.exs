@@ -9,6 +9,7 @@ defmodule Globex.MixProject do
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       description: description(),
+      test_coverage: [tool: ExCoveralls],
       package: package(),
       deps: deps(),
       name: "Globex",
@@ -27,7 +28,8 @@ defmodule Globex.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ex_doc, "~> 0.14", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.14", only: :dev, runtime: false},
+      {:excoveralls, "~> 0.18.3", only: :test}
     ]
   end
 

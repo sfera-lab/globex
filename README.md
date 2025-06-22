@@ -51,11 +51,11 @@ Globex supports loading configuration from external YAML files, which can overri
 ```yaml
 # config.yaml
 Database:
-  host: "production-db.example.com"
-  port: 5432
+  :host: "production-db.example.com"
+  :port: 5432
 Api:
-  timeout: 10000
-  retries: 5
+  :timeout: 10000
+  :retries: 5
 ```
 
 ```elixir
@@ -110,6 +110,30 @@ end
 - **Invalid YAML files**: If a YAML file cannot be parsed, Globex will raise an error during compilation
 - **Unsupported file types**: Only `.yaml` and `.yml` files are supported
 - **Missing external configs**: If a key is not found in the external configuration, the default value will be used
+- **Duplicate key definitions**: Defining the same configuration key twice for the same module will cause a compilation error
+
+#### Example: Duplicate Key Error
+
+If you try to define the same configuration key twice for the same module, Globex will raise a `RuntimeError` during compilation:
+
+```elixir
+defmodule Test do
+  use Globex.Config
+
+  globex_path("test/support/test.yaml")
+
+  globex(Hello, :world, "Hello, world!")
+  globex(Hello, :world, "Aw, Dinja!")  # Error: Duplicate key :world for Hello module
+end
+```
+
+**Error message:**
+
+```
+== Compilation error in file lib/test.ex ==
+** (RuntimeError) Config module:Hello key:world already defined
+    lib/test.ex:7: (module)
+```
 
 ### Best Practices
 

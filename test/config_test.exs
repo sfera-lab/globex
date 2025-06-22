@@ -42,7 +42,7 @@ defmodule Globex.ConfigTest do
 
   describe "duplicate config handling" do
     test "raises error for duplicate module:key combinations" do
-      assert_raise RuntimeError, ~r/Config module:Test key: value already defined/, fn ->
+      assert_raise RuntimeError, "Config module:Test key:value already defined", fn ->
         code = """
         defmodule DuplicateTest do
           use Globex.Config

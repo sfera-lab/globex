@@ -19,26 +19,18 @@ defmodule Globex.Config do
     external_configs = Module.get_attribute(__CALLER__.module, :external_configs) || %{}
     external_value = get_in(external_configs, [module_name_string, key])
 
-    # Check for duplicate configurations
-    existing_configs = Module.get_attribute(__CALLER__.module, :configs) || []
-
-    # Check if this module:key combination already exists
-    duplicate_exists = Enum.any?(existing_configs, fn {existing_module, existing_key, _existing_value} ->
-      existing_module == module_name_string && existing_key == key
-    end)
-
-    if duplicate_exists do
-      raise RuntimeError, "Config module:#{module_name_string} key: #{key} already defined"
-    end
-
     quote do
       # Store the configuration
-      @configs {unquote(module_name_string), unquote(key), unquote(value)}
+      if {unquote(module_name_string), unquote(key)} in Module.get_attribute(__MODULE__, :configs) do
+        raise "Config module:#{unquote(module_name_string)} key:#{unquote(key)} already defined"
+      else
+        Module.put_attribute(__MODULE__, :configs, {unquote(module_name_string), unquote(key)})
 
-      def unquote(function_name)() do
-        case unquote(Macro.escape(external_value)) do
-          nil -> unquote(value)
-          external -> external
+        def unquote(function_name)() do
+          case unquote(Macro.escape(external_value)) do
+            nil -> unquote(value)
+            external -> external
+          end
         end
       end
     end

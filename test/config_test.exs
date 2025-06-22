@@ -5,10 +5,10 @@ defmodule Globex.ConfigTest do
   defmodule TestConfig do
     use Globex.Config
 
-    globex Database, :host, "localhost"
-    globex Database, :port, 5432
-    globex Api, :timeout, 5000
-    globex Api, :retries, 3
+    globex(Database, :host, "localhost")
+    globex(Database, :port, 5432)
+    globex(Api, :timeout, 5000)
+    globex(Api, :retries, 3)
   end
 
   describe "globex macro" do
@@ -50,6 +50,7 @@ defmodule Globex.ConfigTest do
           globex Test, :value, "second"
         end
         """
+
         Code.compile_string(code)
       end
     end
@@ -64,8 +65,9 @@ defmodule Globex.ConfigTest do
     test "handles complex module names" do
       defmodule ComplexModuleName do
         use Globex.Config
-        globex MyApp.Database, :connection_string, "postgres://localhost/db"
+        globex(MyApp.Database, :connection_string, "postgres://localhost/db")
       end
+
       assert ComplexModuleName.get_MyApp_Database_connection_string() == "postgres://localhost/db"
     end
   end
@@ -74,8 +76,8 @@ defmodule Globex.ConfigTest do
     test "handles empty strings and nil values" do
       defmodule EdgeCaseConfig do
         use Globex.Config
-        globex Empty, :string, ""
-        globex Nil, :value, nil
+        globex(Empty, :string, "")
+        globex(Nil, :value, nil)
       end
 
       assert EdgeCaseConfig.get_Empty_string() == ""
@@ -85,9 +87,9 @@ defmodule Globex.ConfigTest do
     test "handles atoms and other data types" do
       defmodule DataTypeConfig do
         use Globex.Config
-        globex Atom, :value, :ok
-        globex List, :value, [1, 2, 3]
-        globex Map, :value, %{key: "value"}
+        globex(Atom, :value, :ok)
+        globex(List, :value, [1, 2, 3])
+        globex(Map, :value, %{key: "value"})
       end
 
       assert DataTypeConfig.get_Atom_value() == :ok

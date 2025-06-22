@@ -29,6 +29,7 @@ defmodule Globex.MixProject do
   defp deps do
     [
       {:ex_doc, "~> 0.14", only: :dev, runtime: false},
+      {:yaml_elixir, "~> 2.11"},
       {:excoveralls, "~> 0.18.3", only: :test}
     ]
   end
